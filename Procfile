@@ -1,0 +1,1 @@
+web: gunicorn trialx_demo.wsgi
