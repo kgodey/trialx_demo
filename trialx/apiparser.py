@@ -24,4 +24,11 @@ def add_trial(trialdict):
 		trial_site.trial = trial
 		trial_site.save()
 		trial_sites.append(trial_site)
-	return trial, trial_sites
+	return trial
+
+
+def add_all_trials(trialsdict):
+	trials = []
+	for trialdict in trialsdict['ClinicalTrials']:
+		trials.append(add_trial(trialdict))
+	return trials
