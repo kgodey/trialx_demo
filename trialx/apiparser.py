@@ -4,7 +4,7 @@ from trialx.models import ClinicalTrial, ClinicalTrialSite
 TRIALX_API_URL = 'http://trialx.com/query'
 
 
-def find_all_trial_matches(**kwargs):
+def find_trial_matches(**kwargs):
 	search_params = kwargs
 	search_params['op'] = 'json'
 	search_params['start'] = requests.get(TRIALX_API_URL, params=search_params).json()['total']
@@ -31,4 +31,10 @@ def add_all_trials(trialsdict):
 	trials = []
 	for trialdict in trialsdict['ClinicalTrials']:
 		trials.append(add_trial(trialdict))
+	return trials
+
+
+def find_and_add_trials(**kwargs):
+	trialsdict = find_trial_matches(**kwargs)
+	trials = add_all_trials(trialsdict)
 	return trials
