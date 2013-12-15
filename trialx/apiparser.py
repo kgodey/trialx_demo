@@ -20,7 +20,7 @@ def add_trial(trialdict):
 	trial.save()
 	trial_sites = []
 	for site in trialdict['Sites']:
-		trial_site = ClinicalTrialSite(sitename = site['sitename'], address = site['address'], city = site['city'], state = site['state'], zip = site['zip'])
+		trial_site = ClinicalTrialSite(sitename = site['sitename'], address = site['address'], city = site['city'], state = site['state'], zipcode = site['zip'])
 		trial_site.trial = trial
 		trial_site.save()
 		trial_sites.append(trial_site)
