@@ -12,10 +12,11 @@ def find_trial_matches(**kwargs):
 
 
 def add_trial(trialdict):
-	if ClinicalTrial.objects.filter(trialx_id=int(trialdict['Id'])).exists():
-		return ClinicalTrial.objects.get(trialx_id=int(trialdict['Id']))
+	trial_id = int(trialdict['Id'])
+	if ClinicalTrial.objects.filter(trialx_id=trial_id).exists():
+		return ClinicalTrial.objects.get(trialx_id=trial_id)
 	else:
-		trial = ClinicalTrial(title = trialdict['Title'], url = trialdict['Url'], trialx_id = trialdict['Id'], source = trialdict['Source'], phase = trialdict['Phase'], condition = trialdict['Condition'])
+		trial = ClinicalTrial(title = trialdict['Title'], url = trialdict['Url'], trialx_id = trial_id, source = trialdict['Source'], phase = trialdict['Phase'], condition = trialdict['Condition'])
 		if trialdict['StudyType'] == 'Observational':
 			trial.study_type = 'O'
 		elif trialdict['StudyType'] == 'Interventional':
@@ -23,7 +24,11 @@ def add_trial(trialdict):
 		trial.save()
 		trial_sites = []
 		for site in trialdict['Sites']:
-			trial_site = ClinicalTrialSite(sitename = site['sitename'], address = site['address'], city = site['city'], state = site['state'], zipcode = site['zip'])
+			trial_site = ClinicalTrialSite(sitename = site['sitename'], address = site['address'], city = site['city'], state = site['state'])
+			try:
+				trial_site.zipcode = int(site['zip'])
+			except ValueError:
+				pass
 			trial_site.trial = trial
 			trial_site.save()
 			trial_sites.append(trial_site)

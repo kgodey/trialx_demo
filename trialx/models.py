@@ -24,7 +24,7 @@ class ClinicalTrialSite(models.Model):
  	address = models.TextField(blank=True)
 	city = models.CharField(max_length=255, blank=True)
 	state = models.CharField(max_length=255, blank=True)
-	zipcode = models.IntegerField(max_length=5, blank=True)
+	zipcode = models.IntegerField(max_length=5, blank=True, null=True)
 	trial = models.ForeignKey(ClinicalTrial)
 	
 	def __unicode__(self):
