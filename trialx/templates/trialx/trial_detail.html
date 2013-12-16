@@ -16,7 +16,7 @@
 				{% if site.city %}{{ site.city }},{% endif %} {% if site.state %}{{ site.state }} {% endif %} {% if site.zipcode %}{{ site.zipcode }} {% endif %}
 			</div>
 			{% endfor %}
-			<p class="text-primary"><a href="{{ trial.url }}">View this trial on TrialX.com</a></p>
+			<a href="{{ trial.url }}"><button type="button" class="btn btn-primary">View this trial on TrialX.com</button></a> <a href="{% url 'random_trial' %}"><button type="button" class="btn btn-default">Show me another trial</button></a>
 		</div>
 	</body>
 </html>
