@@ -1,8 +1,22 @@
 <html>
 	<head>
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 		<title>TrialX demo app</title>
 	</head>
 	<body>
-		<h1>{{ trial.title }}</h1>
+		<div class="container">
+			<div class="page-header"><h3>{{ trial.title }}</h3></div>
+			<p class="lead">This trial is in <strong>{% if trial.phase %} Phase {{ trial.phase }}{% else %}an unknown phase{% endif %}</strong>, for the condition(s) <strong>{% if trial.condition %} {{ trial.condition }}{% else %} an unknown condition{% endif %}</strong>. It is an <strong>{{ trial.get_study_type_display }}</strong> trial.</p>
+			<h4>Locations</h4>
+			{% for site in trial.clinicaltrialsite_set.all %}
+			<div class="well well-sm">
+				<strong>{{ site.sitename }}</strong><br>
+				{% if site.address %}{{ site.address }}<br>{% endif %}
+				{% if site.city %}{{ site.city }},{% endif %} {% if site.state %}{{ site.state }} {% endif %} {% if site.zipcode %}{{ site.zipcode }} {% endif %}
+			</div>
+			{% endfor %}
+			<p class="text-primary"><a href="{{ trial.url }}">View this trial on TrialX.com</a></p>
+		</div>
 	</body>
 </html>
